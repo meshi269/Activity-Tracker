@@ -1,0 +1,8 @@
+cmake-build-debug/
+*.exe
+*.o
+*.obj
+*.dll
+*.log
+.vscode/
+.idea/
