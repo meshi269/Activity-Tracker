@@ -18,7 +18,11 @@ int main() {
     const auto& acts = log.getActivities();
     for (const auto& a : acts) {
         printw("- %s: %s - %s\n", a.getDescription().c_str(), a.getStartTime().c_str(), a.getEndTime().c_str());
-    }
+    }//Utilizza la funzione NCurses printw() per stampare formattato nella finestra.
+    //Ogni %s nella stringa di formato viene sostituito dai rispettivi valori convertiti in C-string:
+    //Nota: .c_str() è necessario perché printw() è una funzione C e richiede stringhe terminate da null (const char*).
+
+
 
     printw("\nPremi un tasto per uscire...");
     refresh();  // Aggiorna lo schermo per mostrare i cambiamenti
