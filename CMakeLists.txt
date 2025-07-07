@@ -24,8 +24,6 @@ add_executable(unit_tests
         DayLogTest.cpp
         Activity.cpp
         DayLog.cpp
-        nCurses.cpp
-        nCurses.h
 )
 
 # Collega Google Test al target dei test

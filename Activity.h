@@ -12,7 +12,7 @@ public:
     std::string getDescription() const;
     std::string getStartTime() const;
     std::string getEndTime() const;
-    bool isValidTimeFormat(const std::string& time) const;
+    static bool isValidTimeFormat(const std::string& time) ;
     bool isTimeRangeValid() const;
 
 private:

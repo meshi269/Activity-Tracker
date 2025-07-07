@@ -18,3 +18,8 @@ bool DayLog::hasOverlappingActivities(const Activity& newActivity) const {
     }
     return false;
 }
+void DayLog::removeActivity(size_t index) {
+    if (index < activities.size()) {
+        activities.erase(activities.begin() + index);
+    }
+}

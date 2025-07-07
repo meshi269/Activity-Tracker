@@ -20,8 +20,8 @@ std::string Activity::getStartTime() const {
 std::string Activity::getEndTime() const {
     return endTime;
 }
-bool Activity::isValidTimeFormat(const std::string& time) const {
-    std::regex timeRegex(R"(([01]?[0-9]|2[0-3]):[0-5][0-9]");
+bool Activity::isValidTimeFormat(const std::string& time) {
+    const std::regex timeRegex(R"(^([01][0-9]|2[0-3]):[0-5][0-9]$)");
     return std::regex_match(time, timeRegex);
 }
 

@@ -2,6 +2,7 @@
 #include "DayLog.h"
 #include <ncursesw/ncurses.h>  // Libreria per l'interfaccia testuale (NCurses)
 #include <cctype>
+#include <regex>
 
 int main() {
     // Inizializzazione NCurses
