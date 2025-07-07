@@ -12,6 +12,9 @@ class DayLog {
 public:
     void addActivity(const Activity& activity);  // Aggiunge un'attività
     const std::vector<Activity>& getActivities() const;  // Restituisce le attività
+    bool hasOverlappingActivities(const Activity& newActivity) const;
+    void removeActivity(size_t index);
+    void clearActivities();
 
 private:
     std::vector<Activity> activities;  // Memorizza le attività in un vettore

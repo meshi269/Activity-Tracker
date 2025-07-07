@@ -1,28 +1,65 @@
 #include "Activity.h"
 #include "DayLog.h"
 #include <ncursesw/ncurses.h>  // Libreria per l'interfaccia testuale (NCurses)
+#include <cctype>
 
 int main() {
-    initscr();      // Inizializza la finestra NCurses
-    noecho();       // Disabilita l'echo dell'input da tastiera
-    cbreak();       // Abilita la modalità "cbreak" (input immediato senza buffering)
+    // Inizializzazione NCurses
+    initscr();  // Inizializza la finestra NCurses (chiamare sempre per prima)
+    cbreak();  // Disabilita il buffering, leggendo i caratteri uno per uno
+    noecho();  // Disabilita la visualizzazione automatica dei tasti premuti
 
-    DayLog log;  // Crea un registro giornaliero
+    DayLog log;
+    char choice;
 
-    // Aggiunge attività al registro
-    log.addActivity(Activity("Studiare C++", "10:00", "12:00"));
-    log.addActivity(Activity("Fare pausa", "12:00", "12:30"));
+    // Loop principale
+    do {
+        // Pulisci e mostra attività
+        clear();
+        printw("REGISTRO ATTIVITÀ\n\n");
+        int row = 2;
+        for (const auto& a : log.getActivities()) {
+            mvprintw(row++, 2, "- %s: %s - %s",
+                    a.getDescription().c_str(),
+                    a.getStartTime().c_str(),
+                    a.getEndTime().c_str());
+        }
+        mvprintw(row+2, 2, "Comandi: (A)ggiungi, (R)imuovi, (E)sci");
+        refresh();
 
-    // Stampa le attività a schermo
-    printw("Registro delle Attività:\n");  // printw() è l'equivalente NCurses di printf()
-    const auto& acts = log.getActivities();
-    for (const auto& a : acts) {
-        printw("- %s: %s - %s\n", a.getDescription().c_str(), a.getStartTime().c_str(), a.getEndTime().c_str());
-    }//Utilizza la funzione NCurses printw() per stampare formattato nella finestra.
-    //Ogni %s nella stringa di formato viene sostituito dai rispettivi valori convertiti in C-string:
-    //Nota: .c_str() è necessario perché printw() è una funzione C e richiede stringhe terminate da null (const char*).
+        // Gestione input
+        choice = toupper(getch());
+        switch (choice) {
+            case 'A': {
+                char desc[100], start[6], end[6];
+                echo();
+                mvprintw(10, 2, "Descrizione: ");
+                getstr(desc);
+                mvprintw(11, 2, "Ora inizio (HH:MM): ");
+                getstr(start);
+                mvprintw(12, 2, "Ora fine (HH:MM): ");
+                getstr(end);
+                noecho();
 
-
+                Activity newActivity(desc, start, end);
+                if (newActivity.isTimeRangeValid() && !log.hasOverlappingActivities(newActivity)) {
+                    log.addActivity(newActivity);
+                } else {
+                    mvprintw(14, 2, "ERRORE: Orario non valido o sovrapposto!");
+                    getch();
+                }
+                break;
+            }
+            case 'R':
+                // (Implementa rimozione)
+                break;
+            case 'E':
+                break;
+            default:
+                mvprintw(20, 2, "Comando non valido!");
+                getch();
+        }
+    } while (choice != 'E');
 
     printw("\nPremi un tasto per uscire...");
     refresh();  // Aggiorna lo schermo per mostrare i cambiamenti

@@ -9,3 +9,12 @@ void DayLog::addActivity(const Activity& activity) {
 const std::vector<Activity>& DayLog::getActivities() const {
     return activities;  // Ritorna il vettore delle attività
 }
+bool DayLog::hasOverlappingActivities(const Activity& newActivity) const {
+    for (const auto& activity : activities) {
+        if (!(newActivity.getEndTime() <= activity.getStartTime() ||
+              newActivity.getStartTime() >= activity.getEndTime())) {
+            return true;
+              }
+    }
+    return false;
+}

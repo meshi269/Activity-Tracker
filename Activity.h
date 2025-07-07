@@ -12,6 +12,8 @@ public:
     std::string getDescription() const;
     std::string getStartTime() const;
     std::string getEndTime() const;
+    bool isValidTimeFormat(const std::string& time) const;
+    bool isTimeRangeValid() const;
 
 private:
     std::string description;  // Descrizione dell'attività
