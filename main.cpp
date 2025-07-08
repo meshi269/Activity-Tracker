@@ -1,14 +1,15 @@
 #include "Activity.h"
 #include "DayLog.h"
-#include <ncursesw/ncurses.h>  // Libreria per l'interfaccia testuale (NCurses)
+#include <ncursesw\ncurses.h>
 #include <cctype>
 #include <regex>
 
 int main() {
     // Inizializzazione NCurses
-    initscr();  // Inizializza la finestra NCurses (chiamare sempre per prima)
-    cbreak();  // Disabilita il buffering, leggendo i caratteri uno per uno
-    noecho();  // Disabilita la visualizzazione automatica dei tasti premuti
+    initscr();
+    cbreak();
+    noecho();
+    keypad(stdscr, TRUE);
 
     DayLog log;
     char choice;
@@ -51,8 +52,8 @@ int main() {
                 }
                 break;
             }
-            case 'R':
-                const auto& actList = log.getActivities();  // Ottieni la lista di attività
+            case 'R': {
+                const auto& actList = log.getActivities();
 
                 if (actList.empty()) {
                     mvprintw(10, 2, "Nessuna attività da rimuovere.");
@@ -67,23 +68,27 @@ int main() {
                 int index = atoi(input);
 
                 if (index > 0 && index <= static_cast<int>(actList.size())) {
-                    log.removeActivity(index - 1);  // Ok: chiamiamo il metodo pubblico
+                    log.removeActivity(index - 1);
                 } else {
                     mvprintw(12, 2, "Indice non valido!");
                     getch();
                 }
                 break;
-            case 'E':
+            }
+            case 'E': {
                 break;
-            default:
+            }
+            default: {
                 mvprintw(20, 2, "Comando non valido!");
                 getch();
+                break;
+            }
         }
     } while (choice != 'E');
 
     printw("\nPremi un tasto per uscire...");
-    refresh();  // Aggiorna lo schermo per mostrare i cambiamenti
-    getch();    // Aspetta che l'utente prema un tasto
-    endwin();   // Termina la sessione NCurses e pulisce la memoria
+    refresh();
+    getch();
+    endwin();
     return 0;
 }

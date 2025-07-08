@@ -1,18 +1,15 @@
 cmake_minimum_required(VERSION 3.31)  # Versione minima di CMake richiesta
-project(untitled4)  # Nome del progetto
+project(Laboratorio)  # Nome del progetto
 
 set(CMAKE_CXX_STANDARD 20)  # Imposta lo standard C++ a C++20
 
 # Crea l'eseguibile principale con tutti i file sorgente
-add_executable(untitled4
+add_executable(Laboratorio
         main.cpp
         Activity.cpp
         Activity.h
         DayLog.cpp
         DayLog.h
-        ActivityTest.cpp
-        DayLogTest.cpp
-        main_ncurses.cpp
 )
 
 
@@ -32,7 +29,7 @@ target_link_libraries(unit_tests gtest gtest_main)
 
 
 # Configurazione per NCurses
-target_link_libraries(untitled4 ${NCurses_LIBRARIES})
-target_include_directories(untitled4 PRIVATE ${NCurses_INCLUDE_DIRS})
-
+target_link_libraries(Laboratorio ${NCursesw_LIBRARIES})
+target_include_directories(Laboratorio PRIVATE ${NCursesw_INCLUDE_DIRS})
+target_link_libraries(Laboratorio PRIVATE ncursesw)
 
