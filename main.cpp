@@ -52,7 +52,26 @@ int main() {
                 break;
             }
             case 'R':
-                // (Implementa rimozione)
+                const auto& actList = log.getActivities();  // Ottieni la lista di attività
+
+                if (actList.empty()) {
+                    mvprintw(10, 2, "Nessuna attività da rimuovere.");
+                    getch();
+                    break;
+                }
+                char input[4];
+                echo();
+                mvprintw(10, 2, "Numero attività da rimuovere: ");
+                getstr(input);
+                noecho();
+                int index = atoi(input);
+
+                if (index > 0 && index <= static_cast<int>(actList.size())) {
+                    log.removeActivity(index - 1);  // Ok: chiamiamo il metodo pubblico
+                } else {
+                    mvprintw(12, 2, "Indice non valido!");
+                    getch();
+                }
                 break;
             case 'E':
                 break;
